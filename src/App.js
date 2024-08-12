@@ -1,23 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { useRef } from "react";
+import {OrbitControls} from "three/addons";
+import {Canvas, extend, useFrame, useThree} from "@react-three/fiber";
 
-function App() {
+import "./App.css"
+
+const Box = (props) => {
+    const ref = useRef();
+
+    useFrame((state) => {
+        ref.current.rotation.x += 0.01;
+        ref.current.rotation.y += 0.01;
+    })
+
+    return (
+        <mesh ref={ref}>
+            <boxGeometry />
+            <meshBasicMaterial color="blue" />
+        </mesh>
+    )
+}
+
+extend({ OrbitControls });
+const Orbit = () => {
+    const { camera, gl } = useThree();
+
+    return (
+        <orbitControls
+            attach='orbitControls'
+            args={[camera, gl.domElement]}
+        />
+    )
+}
+
+const App = () => {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Canvas camera={{ position: [3, 3, 3] }}>
+          <Box position={[3, 3, 3]} />
+          <Orbit />
+          <axesHelper args={[5]} />
+      </Canvas>
     </div>
   );
 }
