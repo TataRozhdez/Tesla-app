@@ -1,46 +1,66 @@
-import React, { useRef } from "react";
-import { OrbitControls } from "three/addons";
-import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
+import React, { Suspense, useEffect, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Physics } from "@react-three/cannon";
 
 import "./App.css";
-
-const Box = (props) => {
-	const ref = useRef();
-
-	useFrame((state) => {
-		ref.current.rotation.x += 0.01;
-		ref.current.rotation.y += 0.01;
-	});
-
-	return (
-		<mesh ref={ref}>
-			123
-			<boxGeometry />
-			<meshBasicMaterial color="blue" />
-		</mesh>
-	);
-};
-
-extend({ OrbitControls });
-
-const Orbit = () => {
-	const { camera, gl } = useThree();
-
-	return (
-		<orbitControls
-			attach="orbitControls"
-			args={[camera, gl.domElement]}
-		/>
-	);
-};
+import {
+	Floor,
+	Orbit,
+	Spinner,
+	Lights,
+	Background,
+	CameraControls,
+	CameraButtons,
+	Effects,
+	Cars,
+	ColorPicker,
+} from "./components";
 
 const App = () => {
+	const [windowDimensions, setWindowDimensions] = useState({
+		width: window.innerWidth,
+		height: window.innerHeight,
+	});
+
+	const handleResize = () => setWindowDimensions({
+		width: window.innerWidth,
+		height: window.innerHeight,
+	});
+
+	useEffect(() => {
+		window.addEventListener("resize", handleResize);
+	}, [windowDimensions]);
+
 	return (
 		<div className="App">
-			<Canvas camera={{ position: [3, 3, 3] }}>
-				<Box position={[3, 3, 3]} />
+			<ColorPicker />
+			<CameraButtons />
+
+			<Canvas
+				gl={{
+				  powerPreference: "high-performance",
+				  antialias: false,
+				  stencil: false,
+				  depth: false,
+				}}
+				shadowMap
+				style={{background: "gray"}}
+				camera={{ position: [7, 7, 7] }}
+			>
+				<Suspense fallback={<Spinner />}>
+					<Background windowDimensions={windowDimensions} />
+				</Suspense>
+
+				<CameraControls />
+				<Lights />
 				<Orbit />
-				<axesHelper args={[5]} />
+
+				<Physics>
+					<Cars />
+					<Floor position={[0, -1, 0]} />
+				</Physics>
+
+				<Effects />
 			</Canvas>
 		</div>
 	);

@@ -2,3 +2,36 @@
   width: 100vw;
   height: 100vh;
 }
+
+._left {
+  left: 40vw;
+}
+
+._right {
+  right: 40vw;
+}
+
+.button_controls {
+  z-index: 1;
+  font-size: 20px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 5vh;
+  height: 40px;
+  width: 40px;
+  background-color: rgb(30, 75, 93);
+  color: black;
+  border-radius: 50%;
+  font-weight: bold;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.color_picker {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  cursor: pointer
+}

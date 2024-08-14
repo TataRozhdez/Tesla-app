@@ -20,8 +20,9 @@
   "rules": {
     "linebreak-style": 2,
     "react/no-unknown-property": "off",
+    "react/prop-types": "off",
     "semi": "error",
-    "object-curly-spacing": ["error", "always"],
+    "no-unused-vars": "off",
     "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
     "comma-dangle": ["error", "always-multiline"],
     "no-multi-spaces": "error",
@@ -75,7 +76,7 @@
     "keyword-spacing": 2,
     "curly": 2,
     "no-multiple-empty-lines": ["error", {"max": 1, "maxEOF": 0}],
-    "space-infix-ops": ["error", {"int32Hint": false}],
+    "space-infix-ops": "off",
     "max-depth": ["error", 3],
     "brace-style": [2, "1tbs", {"allowSingleLine": false}],
     "arrow-spacing": "error",
@@ -160,7 +161,6 @@
       "prevent": true,
       "allowMultilines": true
     }],
-    "object-property-newline": ["error"],
 
     "react/jsx-props-no-multi-spaces": 2,
 
@@ -203,13 +203,7 @@
         "children": true
       }
     ],
-    "object-curly-newline": [
-      "error",
-
-      {
-        "multiline": true,
-        "consistent": true
-      }
-    ]
+    "object-curly-newline": "off",
+    "object-property-newline": "off"
   }
 }
